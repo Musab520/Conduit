@@ -16,12 +16,12 @@ namespace Conduit.Models
         {
         }
 
-        public virtual DbSet<ArticleTbl> ArticleTbls { get; set; } = null!;
-        public virtual DbSet<CommentTbl> CommentTbls { get; set; } = null!;
-        public virtual DbSet<FavoriteArticlesTbl> FavoriteArticlesTbls { get; set; } = null!;
-        public virtual DbSet<UserArticlesTbl> UserArticlesTbls { get; set; } = null!;
-        public virtual DbSet<UserFollowersTbl> UserFollowersTbls { get; set; } = null!;
-        public virtual DbSet<UserTbl> UserTbls { get; set; } = null!;
+        public virtual DbSet<Article> ArticleTbls { get; set; } = null!;
+        public virtual DbSet<Comment> CommentTbls { get; set; } = null!;
+        public virtual DbSet<FavoriteArticles> FavoriteArticlesTbls { get; set; } = null!;
+        public virtual DbSet<UserArticles> UserArticlesTbls { get; set; } = null!;
+        public virtual DbSet<UserFollowers> UserFollowersTbls { get; set; } = null!;
+        public virtual DbSet<User> UserTbls { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -34,136 +34,32 @@ namespace Conduit.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ArticleTbl>(entity =>
-            {
-                entity.HasKey(e => e.ArticleId)
-                    .HasName("PK__ArticleT__9C6270E8285CD803");
-
-                entity.ToTable("ArticleTbl");
-
-                entity.Property(e => e.ArticleBody).HasColumnType("text");
-
-                entity.Property(e => e.ArticleTitle)
-                    .HasMaxLength(128)
-                    .IsUnicode(false)
-                    .HasDefaultValueSql("('Untitled')");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.ArticleTbls)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__ArticleTb__UserI__48CFD27E");
-            });
-
-            modelBuilder.Entity<CommentTbl>(entity =>
-            {
-                entity.HasKey(e => e.CommentId)
-                    .HasName("PK__CommentT__C3B4DFCA03CD38CA");
-
-                entity.ToTable("CommentTbl");
-
-                entity.Property(e => e.BodyText).HasColumnType("text");
-
-                entity.Property(e => e.IsAchild)
-                    .HasColumnName("IsAChild")
-                    .HasDefaultValueSql("((1))");
-
-                entity.HasOne(d => d.Article)
-                    .WithMany(p => p.CommentTbls)
-                    .HasForeignKey(d => d.ArticleId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__CommentTb__Artic__4CA06362");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.CommentTbls)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__CommentTb__UserI__4D94879B");
-            });
-
-            modelBuilder.Entity<FavoriteArticlesTbl>(entity =>
-            {
-                entity.HasKey(e => e.FavoriteArticlesId)
-                    .HasName("PK__Favorite__0D08A5F162681EF2");
-
-                entity.ToTable("FavoriteArticlesTbl");
-
-                entity.HasOne(d => d.Article)
-                    .WithMany(p => p.FavoriteArticlesTbls)
-                    .HasForeignKey(d => d.ArticleId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__FavoriteA__Artic__5070F446");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.FavoriteArticlesTbls)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__FavoriteA__UserI__5165187F");
-            });
-
-            modelBuilder.Entity<UserArticlesTbl>(entity =>
-            {
-                entity.HasKey(e => e.UserArticlesId)
-                    .HasName("PK__UserArti__C2AC7C4C29831B5E");
-
-                entity.ToTable("UserArticlesTbl");
-
-                entity.HasOne(d => d.Article)
-                    .WithMany(p => p.UserArticlesTbls)
-                    .HasForeignKey(d => d.ArticleId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__UserArtic__Artic__5441852A");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserArticlesTbls)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__UserArtic__UserI__5535A963");
-            });
-
-            modelBuilder.Entity<UserFollowersTbl>(entity =>
-            {
-                entity.HasKey(e => e.UserFollowersId)
-                    .HasName("PK__UserFoll__546F7852843AFDB5");
-
-                entity.ToTable("UserFollowersTbl");
-
-                entity.HasOne(d => d.Follower)
-                    .WithMany(p => p.UserFollowersTblFollowers)
-                    .HasForeignKey(d => d.FollowerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__UserFollo__Follo__5812160E");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserFollowersTblUsers)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__UserFollo__UserI__59063A47");
-            });
-
-            modelBuilder.Entity<UserTbl>(entity =>
-            {
-                entity.HasKey(e => e.UserId)
-                    .HasName("PK__UserTbl__1788CC4C27AC690C");
-
-                entity.ToTable("UserTbl");
-
-                entity.Property(e => e.FullName)
-                    .HasMaxLength(128)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Password)
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Username)
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
-            });
-
-            OnModelCreatingPartial(modelBuilder);
+            modelBuilder.Entity<User>().HasData(new User { UserId = 1, Username = "Admin", Password = "Admin", FullName = "Admin" });
+            modelBuilder.Entity<User>().HasData(new User { UserId = 2, Username = "Admin1", Password = "Admin1", FullName = "Admin1" });
+            modelBuilder.Entity<User>().HasData(new User { UserId = 3, Username = "Admin2", Password = "Admin2", FullName = "Admin2" });
+            modelBuilder.Entity<Article>().HasData(new Article { ArticleId = 1 });
+            modelBuilder.Entity<Article>().HasData(new Article { ArticleId = 2 });
+            modelBuilder.Entity<Article>().HasData(new Article { ArticleId = 3 });
+            modelBuilder.Entity<Comment>().HasData(new Comment { CommentId = 1, UserId = 1, ArticleId = 1, BodyText = "Ok" });
+            modelBuilder.Entity<Comment>().HasData(new Comment { CommentId = 2, UserId = 1, ArticleId = 1, BodyText = "Ok" });
+            modelBuilder.Entity<Comment>().HasData(new Comment { CommentId = 3, UserId = 2, ArticleId = 2, BodyText = "Ok" });
+            modelBuilder.Entity<Comment>().HasData(new Comment { CommentId = 4, UserId = 2, ArticleId = 2, BodyText = "Ok" });
+            modelBuilder.Entity<Comment>().HasData(new Comment { CommentId = 5, UserId = 3, ArticleId = 3, BodyText = "yes" });
+            modelBuilder.Entity<Comment>().HasData(new Comment { CommentId = 6, UserId = 3, ArticleId = 3, BodyText = "yes" });
+            modelBuilder.Entity<UserArticles>().HasData(new UserArticles { UserArticlesId = 1, UserId = 1, ArticleId = 1 });
+            modelBuilder.Entity<UserArticles>().HasData(new UserArticles { UserArticlesId = 2, UserId = 2, ArticleId = 2 });
+            modelBuilder.Entity<UserArticles>().HasData(new UserArticles { UserArticlesId = 3, UserId = 3, ArticleId = 3 });
+            modelBuilder.Entity<UserFollowers>().HasData(new UserFollowers { UserFollowersId = 1, UserId = 1, FollowerId = 2 });
+            modelBuilder.Entity<UserFollowers>().HasData(new UserFollowers { UserFollowersId = 2, UserId = 1, FollowerId = 3 });
+            modelBuilder.Entity<UserFollowers>().HasData(new UserFollowers { UserFollowersId = 3, UserId = 2, FollowerId = 3 });
+            modelBuilder.Entity<UserFollowers>().HasData(new UserFollowers { UserFollowersId = 4, UserId = 2, FollowerId = 1 });
+            modelBuilder.Entity<UserFollowers>().HasData(new UserFollowers { UserFollowersId = 5, UserId = 3, FollowerId = 1 });
+            modelBuilder.Entity<FavoriteArticles>().HasData(new FavoriteArticles { FavoriteArticlesId = 1, UserId = 1, ArticleId = 1 });
+            modelBuilder.Entity<FavoriteArticles>().HasData(new FavoriteArticles { FavoriteArticlesId = 2, UserId = 1, ArticleId = 2 });
+            modelBuilder.Entity<FavoriteArticles>().HasData(new FavoriteArticles { FavoriteArticlesId = 3, UserId = 1, ArticleId = 3 });
+            modelBuilder.Entity<FavoriteArticles>().HasData(new FavoriteArticles { FavoriteArticlesId = 4, UserId = 2, ArticleId = 1 });
+            modelBuilder.Entity<FavoriteArticles>().HasData(new FavoriteArticles { FavoriteArticlesId = 5, UserId = 2, ArticleId = 2 });
         }
-
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+        
     }
 }

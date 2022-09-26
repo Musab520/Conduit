@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Conduit.Models
 {
-    public partial class CommentTbl
+    public class Comment
     {
         public int CommentId { get; set; }
         public int ArticleId { get; set; }
@@ -12,7 +12,7 @@ namespace Conduit.Models
         public bool? IsAchild { get; set; }
         public string? BodyText { get; set; }
 
-        public virtual ArticleTbl Article { get; set; } = null!;
-        public virtual UserTbl User { get; set; } = null!;
+        public Article? Article { get; set; }
+        public User? User { get; set; }
     }
 }

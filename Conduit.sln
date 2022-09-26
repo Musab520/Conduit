@@ -5,10 +5,6 @@ VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conduit", "Conduit\Conduit.csproj", "{CE3810AA-501C-4010-BA67-27684515AB0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conduit.Core", "Conduit.Core\Conduit.Core.csproj", "{1FC066D3-4012-4250-919A-5952DB5E6ACD}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conduit.Infrastructure", "Conduit.Infrastructure\Conduit.Infrastructure.csproj", "{B31A06E0-AEFB-4898-BE32-882D02198AE2}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,14 +15,6 @@ Global
 		{CE3810AA-501C-4010-BA67-27684515AB0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE3810AA-501C-4010-BA67-27684515AB0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE3810AA-501C-4010-BA67-27684515AB0B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1FC066D3-4012-4250-919A-5952DB5E6ACD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1FC066D3-4012-4250-919A-5952DB5E6ACD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1FC066D3-4012-4250-919A-5952DB5E6ACD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1FC066D3-4012-4250-919A-5952DB5E6ACD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B31A06E0-AEFB-4898-BE32-882D02198AE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B31A06E0-AEFB-4898-BE32-882D02198AE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B31A06E0-AEFB-4898-BE32-882D02198AE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B31A06E0-AEFB-4898-BE32-882D02198AE2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

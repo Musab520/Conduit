@@ -9,23 +9,40 @@ namespace Conduit.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.InsertData(
-                table: "ArticleTbls",
-                columns: new[] { "ArticleId", "ArticleBody", "ArticleTitle" },
-                values: new object[,]
-                {
-                    { 1, "", "Untitled" },
-                    { 2, "", "Untitled" },
-                    { 3, "", "Untitled" }
-                });
+                table: "UserTbls",
+                columns: new[] { "UserId", "FullName", "Password", "Username" },
+                values: new object[] { 1, "Admin", "Admin", "Admin" });
 
             migrationBuilder.InsertData(
                 table: "UserTbls",
                 columns: new[] { "UserId", "FullName", "Password", "Username" },
+                values: new object[] { 2, "Admin1", "Admin1", "Admin1" });
+
+            migrationBuilder.InsertData(
+                table: "UserTbls",
+                columns: new[] { "UserId", "FullName", "Password", "Username" },
+                values: new object[] { 3, "Admin2", "Admin2", "Admin2" });
+
+            migrationBuilder.InsertData(
+                table: "ArticleTbls",
+                columns: new[] { "ArticleId", "ArticleBody", "ArticleTitle", "UserId" },
                 values: new object[,]
                 {
-                    { 1, "Admin", "Admin", "Admin" },
-                    { 2, "Admin1", "Admin1", "Admin1" },
-                    { 3, "Admin2", "Admin2", "Admin2" }
+                    { 1, "", "Untitled", 1 },
+                    { 2, "", "Untitled", 2 },
+                    { 3, "", "Untitled", 3 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "UserFollowersTbls",
+                columns: new[] { "UserFollowersId", "FollowerId", "UserId" },
+                values: new object[,]
+                {
+                    { 1, 2, 1 },
+                    { 2, 3, 1 },
+                    { 3, 3, 2 },
+                    { 4, 1, 2 },
+                    { 5, 1, 3 }
                 });
 
             migrationBuilder.InsertData(
@@ -51,28 +68,6 @@ namespace Conduit.Migrations
                     { 3, 3, 1 },
                     { 4, 1, 2 },
                     { 5, 2, 2 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "UserArticlesTbls",
-                columns: new[] { "UserArticlesId", "ArticleId", "UserId" },
-                values: new object[,]
-                {
-                    { 1, 1, 1 },
-                    { 2, 2, 2 },
-                    { 3, 3, 3 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "UserFollowersTbls",
-                columns: new[] { "UserFollowersId", "FollowerId", "UserId" },
-                values: new object[,]
-                {
-                    { 1, 2, 1 },
-                    { 2, 3, 1 },
-                    { 3, 3, 2 },
-                    { 4, 1, 2 },
-                    { 5, 1, 3 }
                 });
         }
 
@@ -132,21 +127,6 @@ namespace Conduit.Migrations
                 table: "FavoriteArticlesTbls",
                 keyColumn: "FavoriteArticlesId",
                 keyValue: 5);
-
-            migrationBuilder.DeleteData(
-                table: "UserArticlesTbls",
-                keyColumn: "UserArticlesId",
-                keyValue: 1);
-
-            migrationBuilder.DeleteData(
-                table: "UserArticlesTbls",
-                keyColumn: "UserArticlesId",
-                keyValue: 2);
-
-            migrationBuilder.DeleteData(
-                table: "UserArticlesTbls",
-                keyColumn: "UserArticlesId",
-                keyValue: 3);
 
             migrationBuilder.DeleteData(
                 table: "UserFollowersTbls",

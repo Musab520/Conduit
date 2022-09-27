@@ -16,30 +16,26 @@ namespace Conduit.Models
         {
         }
 
-        public virtual DbSet<Article> ArticleTbls { get; set; } = null!;
-        public virtual DbSet<Comment> CommentTbls { get; set; } = null!;
-        public virtual DbSet<FavoriteArticles> FavoriteArticlesTbls { get; set; } = null!;
-        public virtual DbSet<UserArticles> UserArticlesTbls { get; set; } = null!;
-        public virtual DbSet<UserFollowers> UserFollowersTbls { get; set; } = null!;
-        public virtual DbSet<User> UserTbls { get; set; } = null!;
+        public DbSet<Article> ArticleTbls { get; set; } = null!;
+        public DbSet<Comment> CommentTbls { get; set; } = null!;
+        public DbSet<FavoriteArticles> FavoriteArticlesTbls { get; set; } = null!;
+        public DbSet<UserFollowers> UserFollowersTbls { get; set; } = null!;
+        public DbSet<User> UserTbls { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasData(new User { UserId = 1, Username = "Admin", Password = "Admin", FullName = "Admin" });
             modelBuilder.Entity<User>().HasData(new User { UserId = 2, Username = "Admin1", Password = "Admin1", FullName = "Admin1" });
             modelBuilder.Entity<User>().HasData(new User { UserId = 3, Username = "Admin2", Password = "Admin2", FullName = "Admin2" });
-            modelBuilder.Entity<Article>().HasData(new Article { ArticleId = 1 });
-            modelBuilder.Entity<Article>().HasData(new Article { ArticleId = 2 });
-            modelBuilder.Entity<Article>().HasData(new Article { ArticleId = 3 });
+            modelBuilder.Entity<Article>().HasData(new Article { ArticleId = 1,UserId=1 });
+            modelBuilder.Entity<Article>().HasData(new Article { ArticleId = 2,UserId=2 });
+            modelBuilder.Entity<Article>().HasData(new Article { ArticleId = 3,UserId=3 });
             modelBuilder.Entity<Comment>().HasData(new Comment { CommentId = 1, UserId = 1, ArticleId = 1, BodyText = "Ok" });
             modelBuilder.Entity<Comment>().HasData(new Comment { CommentId = 2, UserId = 1, ArticleId = 1, BodyText = "Ok" });
             modelBuilder.Entity<Comment>().HasData(new Comment { CommentId = 3, UserId = 2, ArticleId = 2, BodyText = "Ok" });
             modelBuilder.Entity<Comment>().HasData(new Comment { CommentId = 4, UserId = 2, ArticleId = 2, BodyText = "Ok" });
             modelBuilder.Entity<Comment>().HasData(new Comment { CommentId = 5, UserId = 3, ArticleId = 3, BodyText = "yes" });
             modelBuilder.Entity<Comment>().HasData(new Comment { CommentId = 6, UserId = 3, ArticleId = 3, BodyText = "yes" });
-            modelBuilder.Entity<UserArticles>().HasData(new UserArticles { UserArticlesId = 1, UserId = 1, ArticleId = 1 });
-            modelBuilder.Entity<UserArticles>().HasData(new UserArticles { UserArticlesId = 2, UserId = 2, ArticleId = 2 });
-            modelBuilder.Entity<UserArticles>().HasData(new UserArticles { UserArticlesId = 3, UserId = 3, ArticleId = 3 });
             modelBuilder.Entity<UserFollowers>().HasData(new UserFollowers { UserFollowersId = 1, UserId = 1, FollowerId = 2 });
             modelBuilder.Entity<UserFollowers>().HasData(new UserFollowers { UserFollowersId = 2, UserId = 1, FollowerId = 3 });
             modelBuilder.Entity<UserFollowers>().HasData(new UserFollowers { UserFollowersId = 3, UserId = 2, FollowerId = 3 });

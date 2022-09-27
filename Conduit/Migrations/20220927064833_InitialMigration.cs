@@ -9,20 +9,6 @@ namespace Conduit.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ArticleTbls",
-                columns: table => new
-                {
-                    ArticleId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ArticleTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ArticleBody = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ArticleTbls", x => x.ArticleId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "UserTbls",
                 columns: table => new
                 {
@@ -36,7 +22,53 @@ namespace Conduit.Migrations
                 {
                     table.PrimaryKey("PK_UserTbls", x => x.UserId);
                 });
+            migrationBuilder.CreateTable(
+                name: "ArticleTbls",
+                columns: table => new
+                {
+                    ArticleId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    ArticleTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ArticleBody = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArticleTbls", x => x.ArticleId);
+                    table.ForeignKey(
+                        name: "FK_ArticleTbls_UserTbls_UserId",
+                        column: x => x.UserId,
+                        principalTable: "UserTbls",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.NoAction);
+                });
 
+            migrationBuilder.CreateTable(
+                name: "UserFollowersTbls",
+                columns: table => new
+                {
+                    UserFollowersId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    FollowerId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserFollowersTbls", x => x.UserFollowersId);
+                    table.ForeignKey(
+                        name: "FK_UserFollowersTbls_UserTbls_FollowerId",
+                        column: x => x.FollowerId,
+                        principalTable: "UserTbls",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_UserFollowersTbls_UserTbls_UserId",
+                        column: x => x.UserId,
+                        principalTable: "UserTbls",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.NoAction);
+                });
+            migrationBuilder.Sql("Alter Table UserFollowersTbls Add Check(UserId!=FollowerId)");
             migrationBuilder.CreateTable(
                 name: "CommentTbls",
                 columns: table => new
@@ -63,7 +95,7 @@ namespace Conduit.Migrations
                         column: x => x.UserId,
                         principalTable: "UserTbls",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -92,58 +124,11 @@ namespace Conduit.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "UserArticlesTbls",
-                columns: table => new
-                {
-                    UserArticlesId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    ArticleId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserArticlesTbls", x => x.UserArticlesId);
-                    table.ForeignKey(
-                        name: "FK_UserArticlesTbls_ArticleTbls_ArticleId",
-                        column: x => x.ArticleId,
-                        principalTable: "ArticleTbls",
-                        principalColumn: "ArticleId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UserArticlesTbls_UserTbls_UserId",
-                        column: x => x.UserId,
-                        principalTable: "UserTbls",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
-                });
+            migrationBuilder.CreateIndex(
+                name: "IX_ArticleTbls_UserId",
+                table: "ArticleTbls",
+                column: "UserId");
 
-            migrationBuilder.CreateTable(
-                name: "UserFollowersTbls",
-                columns: table => new
-                {
-                    UserFollowersId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    FollowerId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserFollowersTbls", x => x.UserFollowersId);
-                    table.ForeignKey(
-                        name: "FK_UserFollowersTbls_UserTbls_FollowerId",
-                        column: x => x.FollowerId,
-                        principalTable: "UserTbls",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.NoAction);
-                    table.ForeignKey(
-                        name: "FK_UserFollowersTbls_UserTbls_UserId",
-                        column: x => x.UserId,
-                        principalTable: "UserTbls",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-            migrationBuilder.Sql("ALTER TABLE UserFollowersTbls ADD CHECK(UserId!=FollowerId);");
             migrationBuilder.CreateIndex(
                 name: "IX_CommentTbls_ArticleId",
                 table: "CommentTbls",
@@ -165,16 +150,6 @@ namespace Conduit.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserArticlesTbls_ArticleId",
-                table: "UserArticlesTbls",
-                column: "ArticleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserArticlesTbls_UserId",
-                table: "UserArticlesTbls",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_UserFollowersTbls_FollowerId",
                 table: "UserFollowersTbls",
                 column: "FollowerId");
@@ -192,9 +167,6 @@ namespace Conduit.Migrations
 
             migrationBuilder.DropTable(
                 name: "FavoriteArticlesTbls");
-
-            migrationBuilder.DropTable(
-                name: "UserArticlesTbls");
 
             migrationBuilder.DropTable(
                 name: "UserFollowersTbls");

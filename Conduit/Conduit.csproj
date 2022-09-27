@@ -25,7 +25,6 @@
     <Folder Include="Presentation\Controllers\" />
     <Folder Include="Presentation\" />
     <Folder Include="Presentation\Views\" />
-    <Folder Include="Infrastructure\Repositories\" />
   </ItemGroup>
 
 </Project>

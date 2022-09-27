@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Conduit.Migrations
 {
     [DbContext(typeof(ConduitDBContext))]
-    [Migration("20220926120027_InitialMigration")]
+    [Migration("20220927064833_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,7 +38,12 @@ namespace Conduit.Migrations
                     b.Property<string>("ArticleTitle")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("ArticleId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("ArticleTbls");
                 });
@@ -123,29 +128,6 @@ namespace Conduit.Migrations
                     b.ToTable("UserTbls");
                 });
 
-            modelBuilder.Entity("Conduit.Models.UserArticles", b =>
-                {
-                    b.Property<int>("UserArticlesId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserArticlesId"), 1L, 1);
-
-                    b.Property<int>("ArticleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserArticlesId");
-
-                    b.HasIndex("ArticleId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserArticlesTbls");
-                });
-
             modelBuilder.Entity("Conduit.Models.UserFollowers", b =>
                 {
                     b.Property<int>("UserFollowersId")
@@ -169,10 +151,21 @@ namespace Conduit.Migrations
                     b.ToTable("UserFollowersTbls");
                 });
 
+            modelBuilder.Entity("Conduit.Models.Article", b =>
+                {
+                    b.HasOne("Conduit.Models.User", "User")
+                        .WithMany("Articles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Conduit.Models.Comment", b =>
                 {
                     b.HasOne("Conduit.Models.Article", "Article")
-                        .WithMany()
+                        .WithMany("comments")
                         .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -189,25 +182,6 @@ namespace Conduit.Migrations
                 });
 
             modelBuilder.Entity("Conduit.Models.FavoriteArticles", b =>
-                {
-                    b.HasOne("Conduit.Models.Article", "Article")
-                        .WithMany()
-                        .HasForeignKey("ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Conduit.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Article");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Conduit.Models.UserArticles", b =>
                 {
                     b.HasOne("Conduit.Models.Article", "Article")
                         .WithMany()
@@ -243,6 +217,16 @@ namespace Conduit.Migrations
                     b.Navigation("Follower");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Conduit.Models.Article", b =>
+                {
+                    b.Navigation("comments");
+                });
+
+            modelBuilder.Entity("Conduit.Models.User", b =>
+                {
+                    b.Navigation("Articles");
                 });
 #pragma warning restore 612, 618
         }

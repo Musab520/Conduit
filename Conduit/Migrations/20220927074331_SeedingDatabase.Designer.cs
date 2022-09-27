@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Conduit.Migrations
 {
     [DbContext(typeof(ConduitDBContext))]
-    [Migration("20220926120718_SeedingDatabase")]
+    [Migration("20220927074331_SeedingDatabase")]
     partial class SeedingDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,7 +38,12 @@ namespace Conduit.Migrations
                     b.Property<string>("ArticleTitle")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("ArticleId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("ArticleTbls");
 
@@ -47,19 +52,22 @@ namespace Conduit.Migrations
                         {
                             ArticleId = 1,
                             ArticleBody = "",
-                            ArticleTitle = "Untitled"
+                            ArticleTitle = "Untitled",
+                            UserId = 1
                         },
                         new
                         {
                             ArticleId = 2,
                             ArticleBody = "",
-                            ArticleTitle = "Untitled"
+                            ArticleTitle = "Untitled",
+                            UserId = 2
                         },
                         new
                         {
                             ArticleId = 3,
                             ArticleBody = "",
-                            ArticleTitle = "Untitled"
+                            ArticleTitle = "Untitled",
+                            UserId = 3
                         });
                 });
 
@@ -242,49 +250,6 @@ namespace Conduit.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Conduit.Models.UserArticles", b =>
-                {
-                    b.Property<int>("UserArticlesId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserArticlesId"), 1L, 1);
-
-                    b.Property<int>("ArticleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserArticlesId");
-
-                    b.HasIndex("ArticleId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserArticlesTbls");
-
-                    b.HasData(
-                        new
-                        {
-                            UserArticlesId = 1,
-                            ArticleId = 1,
-                            UserId = 1
-                        },
-                        new
-                        {
-                            UserArticlesId = 2,
-                            ArticleId = 2,
-                            UserId = 2
-                        },
-                        new
-                        {
-                            UserArticlesId = 3,
-                            ArticleId = 3,
-                            UserId = 3
-                        });
-                });
-
             modelBuilder.Entity("Conduit.Models.UserFollowers", b =>
                 {
                     b.Property<int>("UserFollowersId")
@@ -311,20 +276,20 @@ namespace Conduit.Migrations
                         new
                         {
                             UserFollowersId = 1,
-                            FollowerId = 1,
+                            FollowerId = 2,
                             UserId = 1
                         },
                         new
                         {
                             UserFollowersId = 2,
-                            FollowerId = 2,
+                            FollowerId = 3,
                             UserId = 1
                         },
                         new
                         {
                             UserFollowersId = 3,
                             FollowerId = 3,
-                            UserId = 1
+                            UserId = 2
                         },
                         new
                         {
@@ -335,15 +300,26 @@ namespace Conduit.Migrations
                         new
                         {
                             UserFollowersId = 5,
-                            FollowerId = 2,
-                            UserId = 2
+                            FollowerId = 1,
+                            UserId = 3
                         });
+                });
+
+            modelBuilder.Entity("Conduit.Models.Article", b =>
+                {
+                    b.HasOne("Conduit.Models.User", "User")
+                        .WithMany("Articles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Conduit.Models.Comment", b =>
                 {
                     b.HasOne("Conduit.Models.Article", "Article")
-                        .WithMany()
+                        .WithMany("comments")
                         .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -360,25 +336,6 @@ namespace Conduit.Migrations
                 });
 
             modelBuilder.Entity("Conduit.Models.FavoriteArticles", b =>
-                {
-                    b.HasOne("Conduit.Models.Article", "Article")
-                        .WithMany()
-                        .HasForeignKey("ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Conduit.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Article");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Conduit.Models.UserArticles", b =>
                 {
                     b.HasOne("Conduit.Models.Article", "Article")
                         .WithMany()
@@ -414,6 +371,16 @@ namespace Conduit.Migrations
                     b.Navigation("Follower");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Conduit.Models.Article", b =>
+                {
+                    b.Navigation("comments");
+                });
+
+            modelBuilder.Entity("Conduit.Models.User", b =>
+                {
+                    b.Navigation("Articles");
                 });
 #pragma warning restore 612, 618
         }

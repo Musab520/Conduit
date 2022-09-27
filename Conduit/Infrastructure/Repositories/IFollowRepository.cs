@@ -6,7 +6,7 @@ namespace Conduit.Infrastructure.Repositories
     {
         public Task AddFollower(UserFollowers userFollowers);
         public Task<IEnumerable<UserFollowers>> GetAllUserFollowers(int UserId);
-        public Task DeleteUserFollowers(int UserFollowersId);
+        public void DeleteUserFollowers(UserFollowers userFollower);
         public Task<bool> SaveChangesAsync();
     }
 }

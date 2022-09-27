@@ -6,7 +6,7 @@ namespace Conduit.Infrastructure.Repositories
     {
         public Task AddFavoriteArticle(FavoriteArticles favoriteArticles);
         public Task<IEnumerable<FavoriteArticles>> GetAllFavoriteArticles(int UserId);
-        public Task DeleteFavoriteArticle(int FavoriteArticleId);
+        public void DeleteFavoriteArticle(FavoriteArticles favoriteArticle);
         public Task<bool> SaveChangesAsync();
 
     }

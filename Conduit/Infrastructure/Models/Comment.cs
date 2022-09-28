@@ -11,6 +11,7 @@ namespace Conduit.Models
         public int? ParentCommentId { get; set; }
         public bool? IsAchild { get; set; }
         public string? BodyText { get; set; }
+        public DateTime date { get; set; }
         public Article? Article { get; set; }
         public User? User { get; set; }
     }

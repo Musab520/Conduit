@@ -48,6 +48,8 @@ namespace Conduit.Models
             modelBuilder.Entity<FavoriteArticles>().HasData(new FavoriteArticles { FavoriteArticlesId = 3, UserId = 1, ArticleId = 3 });
             modelBuilder.Entity<FavoriteArticles>().HasData(new FavoriteArticles { FavoriteArticlesId = 4, UserId = 2, ArticleId = 1 });
             modelBuilder.Entity<FavoriteArticles>().HasData(new FavoriteArticles { FavoriteArticlesId = 5, UserId = 2, ArticleId = 2 });
+            modelBuilder.Entity<User>().HasIndex(x => x.Username).IsUnique();
+           
         }
         
     }

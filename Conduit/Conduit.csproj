@@ -20,7 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Core\DTOModels\" />
+    <Folder Include="Core\Mappers\" />
+    <Folder Include="Core\Validators\" />
     <Folder Include="Core\Services\" />
     <Folder Include="Presentation\Controllers\" />
     <Folder Include="Presentation\" />

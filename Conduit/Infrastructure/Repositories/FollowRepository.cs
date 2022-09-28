@@ -9,7 +9,7 @@ namespace Conduit.Infrastructure.Repositories
 
         public FollowRepository(ConduitDBContext conduitDbContext)
         {
-            this.conduitDbContext = conduitDbContext;
+            this.conduitDbContext = conduitDbContext ?? throw new ArgumentNullException(nameof(conduitDbContext));
         }
         public async Task AddFollower(UserFollowers userFollower)
         {

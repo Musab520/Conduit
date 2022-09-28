@@ -9,7 +9,7 @@ namespace Conduit.Infrastructure.Repositories
 
         public UserRepository(ConduitDBContext conduitDbContext)
         {
-            this.conduitDbContext = conduitDbContext;    
+            this.conduitDbContext = conduitDbContext ?? throw new ArgumentNullException(nameof(conduitDbContext));    
         }
         public async Task AddUser(User user)
         {

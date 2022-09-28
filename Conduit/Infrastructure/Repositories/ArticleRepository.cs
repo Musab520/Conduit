@@ -10,7 +10,7 @@ namespace Conduit.Infrastructure.Repositories
 
         public ArticleRepository(ConduitDBContext conduitDbContext)
         {
-            this.conduitDbContext = conduitDbContext;
+            this.conduitDbContext = conduitDbContext ?? throw new ArgumentNullException(nameof(conduitDbContext));
         }
         public async Task AddArticle(Article article)
         {

@@ -9,7 +9,7 @@ namespace Conduit.Infrastructure.Repositories
 
         public CommentRepository(ConduitDBContext conduitDbContext)
         {
-            this.conduitDbContext = conduitDbContext;
+            this.conduitDbContext = conduitDbContext ?? throw new ArgumentNullException(nameof(conduitDbContext));
         }
         public async Task AddComment(Comment comment)
         {

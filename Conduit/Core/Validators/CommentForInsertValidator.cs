@@ -1,9 +1,10 @@
-﻿using Conduit.Models;
+﻿using Conduit.Core.DTOModels;
+using Conduit.Models;
 using FluentValidation;
 
 namespace Conduit.Core.Validators
 {
-    public class CommentForInsertValidator : AbstractValidator<Comment>
+    public class CommentForInsertValidator : AbstractValidator<CommentForInsertDTO>
     {
         public CommentForInsertValidator()
         {

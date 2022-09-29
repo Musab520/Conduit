@@ -9,7 +9,11 @@ namespace Conduit.Core.Mappers
         public UserProfile()
         {
             CreateMap<UserDTO, User>();
+            CreateMap<User, UserDTO>();
+            CreateMap<User, UserForUpdateDTO>();
+            CreateMap<UserForUpdateDTO,User>();
             CreateMap<UserForInsertDTO, User>();
+
         }
     }
 }

@@ -9,7 +9,10 @@ namespace Conduit.Core.Mappers
         public ArticleProfile()
         {
             CreateMap<ArticleDTO, Article>();
+            CreateMap<Article, ArticleDTO>();
             CreateMap<ArticleForInsertDTO, Article>();
+            CreateMap<ArticleForUpdateDTO, Article>();
+            CreateMap<Article,ArticleForUpdateDTO>();
         }
     }
 }

@@ -9,6 +9,7 @@ namespace Conduit.Core.Mappers
         public CommentProfile()
         {
             CreateMap<CommentDTO,Comment>();
+            CreateMap<Comment, CommentDTO>();
             CreateMap<CommentForInsertDTO, Comment>();
         }
     }

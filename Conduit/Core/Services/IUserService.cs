@@ -2,13 +2,14 @@
 using Conduit.Infrastructure.Repositories;
 using Conduit.Models;
 using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Conduit.Core.Services
 {
     public interface IUserService
     {
-        public Task<bool> AddUserAsync(UserForInsertDTO userforInsert);
+        public Task<UserDTO?> AddUserAsync(UserForInsertDTO userforInsert);
         public Task<UserDTO?> GetUserAsync(int UserId);
-        public Task UpdateUserFullNameAsync(UserForUpdateDTO userForUpdateDTO,User user);
+        public Task UpdateUserAsync(UserForUpdateDTO userForUpdateDTO,int UserId);
     }
 }

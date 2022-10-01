@@ -20,10 +20,6 @@ namespace Conduit.Models
         public DbSet<FavoriteArticles> FavoriteArticlesTbls { get; set; } = null!;
         public DbSet<UserFollowers> UserFollowersTbls { get; set; } = null!;
         public DbSet<User> UserTbls { get; set; } = null!;
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Server = (localdb)\mssqllocaldb; Database = ConduitDB");
-        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasData(new User { UserId = 1, Username = "Admin", Password = "Admin", FullName = "Admin" });

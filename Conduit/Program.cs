@@ -9,17 +9,19 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<ConduitDBContext>(dbContextOptions => dbContextOptions.UseSqlServer(builder.Configuration["ConnectionStrings:ConduitDB"]));
+builder.Services.AddDbContext<ConduitDBContext>(dbContextOptions => dbContextOptions.UseSqlServer(builder.Configuration["ConnectionStrings:ConduitDB"]).EnableSensitiveDataLogging());
 builder.Services.AddScoped<ConduitDBContext>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<UserForInsertValidator>();
 builder.Services.AddScoped<UserForUpdateValidator>();
+builder.Services.AddScoped<ArticleForUpdateValidator>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IArticleRepository, ArticleRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<IFavoriteArticlesRepository, FavoriteArticlesRepository>();
 builder.Services.AddScoped<IFollowRepository, FollowRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IArticleService, ArticleService>();
 
 var app = builder.Build();
 app.UseHttpsRedirection();

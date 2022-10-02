@@ -10,23 +10,23 @@ namespace Conduit.Core.Services
     {
         private readonly IArticleRepository articleRepository;
         private readonly IMapper mapper;
-        private readonly ArticleForUpdateValidator validator;
 
         public ArticleService(IArticleRepository articleRepository, IMapper mapper,ArticleForUpdateValidator validator)
         {
             this.articleRepository = articleRepository ?? throw new ArgumentNullException(nameof(articleRepository));
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            this.validator = validator ?? throw new ArgumentNullException(nameof(validator));
         }
-        public async Task AddArticleAsync(ArticleForInsertDTO articleForInsert)
+        public async Task<ArticleDTO> AddArticleAsync(ArticleForInsertDTO articleForInsert)
         {
              Article article = mapper.Map<ArticleForInsertDTO, Article>(articleForInsert);
              await articleRepository.AddArticle(article);
              await articleRepository.SaveChangesAsync();
+             return mapper.Map<ArticleDTO>(article);
         }
         public async Task<bool> DeleteArticle(ArticleDTO articleDTO)
         {
-               Article article = mapper.Map<Article>(articleDTO);
+            articleRepository.ClearTracking();
+            Article article = mapper.Map<Article>(articleDTO);
                articleRepository.DeleteArticle(article);
                return await articleRepository.SaveChangesAsync();
         }
@@ -37,8 +37,6 @@ namespace Conduit.Core.Services
             if (article == null)
                 return null;
             return mapper.Map<ArticleDTO>(article);
-            
-    
         }
 
         public async Task<IEnumerable<ArticleDTO>> GetUserArticlesAsync(int UserId)
@@ -47,15 +45,13 @@ namespace Conduit.Core.Services
            return mapper.Map<IEnumerable<ArticleDTO>>(articles);
         }
 
-        public async Task<bool> UpdateArticleAsync(ArticleForUpdateDTO articleForUpdate,Article article)
+        public async Task UpdateArticleAsync(ArticleForUpdateDTO articleForUpdate,int ArticleId)
         {
-            var articleForUpdateValidatorResult= validator.Validate(articleForUpdate);
-            if (articleForUpdateValidatorResult.IsValid)
-            {
+                Article article = await articleRepository.GetArticle(ArticleId);
                 mapper.Map(articleForUpdate, article);
-                return await articleRepository.SaveChangesAsync();
-            }
-            return false;
+                await articleRepository.SaveChangesAsync();
+              
+       
         }
     }
 }

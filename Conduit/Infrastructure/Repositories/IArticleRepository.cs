@@ -9,5 +9,6 @@ namespace Conduit.Infrastructure.Repositories
         public Task<IEnumerable<Article>> GetUserArticles(int UserId);
         public void DeleteArticle(Article article);
         public Task<bool> SaveChangesAsync();
+        public void ClearTracking();
     }
 }

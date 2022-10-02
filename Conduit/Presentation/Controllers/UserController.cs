@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Conduit.Presentation.Controllers
 {
     [ApiController]
-    [Route("users")]
+    [Route("api/users")]
     public class UserController : Controller
     {
         private readonly IUserService userService;

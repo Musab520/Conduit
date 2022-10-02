@@ -10,27 +10,26 @@ namespace Conduit.Core.Services
     {
         private readonly ICommentRepository commentRepository;
         private readonly IMapper mapper;
-        private readonly CommentForInsertValidator validator;
+
 
         public CommentService(ICommentRepository commentRepository, IMapper mapper, CommentForInsertValidator validator)
         {
             this.commentRepository = commentRepository ?? throw new ArgumentNullException(nameof(commentRepository));
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            this.validator = validator ?? throw new ArgumentNullException(nameof(validator));
+           
         }
-        public async Task<bool> AddComment(CommentForInsertDTO commentForInsert)
+        public async Task<CommentDTO> AddComment(CommentForInsertDTO commentForInsert)
         {
-            var commentValidationResult = await validator.ValidateAsync(commentForInsert);
-            if (commentValidationResult.IsValid)
-            {
+      
                 Comment comment = mapper.Map<CommentForInsertDTO, Comment>(commentForInsert);
                 await commentRepository.AddComment(comment);
-                return await commentRepository.SaveChangesAsync();
-            }
-            return false;
+                await commentRepository.SaveChangesAsync();
+                return mapper.Map<CommentDTO>(comment);
+         
         }
         public async Task<bool> DeleteComment(CommentDTO commentDTO)
         {
+            commentRepository.ClearTracking();
             Comment? comment = mapper.Map<Comment>(commentDTO);
            
                 commentRepository.DeleteComment(comment);

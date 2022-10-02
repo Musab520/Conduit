@@ -15,6 +15,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<UserForInsertValidator>();
 builder.Services.AddScoped<UserForUpdateValidator>();
 builder.Services.AddScoped<ArticleForUpdateValidator>();
+builder.Services.AddScoped<CommentForInsertValidator>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IArticleRepository, ArticleRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
@@ -22,6 +23,7 @@ builder.Services.AddScoped<IFavoriteArticlesRepository, FavoriteArticlesReposito
 builder.Services.AddScoped<IFollowRepository, FollowRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IArticleService, ArticleService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
 
 var app = builder.Build();
 app.UseHttpsRedirection();

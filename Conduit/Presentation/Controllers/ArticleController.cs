@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Conduit.Presentation.Controllers
 {
     [ApiController]
-    [Route("articles")]
+    [Route("api")]
     public class ArticleController : Controller
     {
         private readonly IArticleService articleService;
@@ -19,7 +19,7 @@ namespace Conduit.Presentation.Controllers
             this.articleForUpdateValidator = articleForUpdateValidator ?? throw new ArgumentNullException(nameof(articleForUpdateValidator));
         }
         [HttpGet(Name = "GetArticle")]
-        [Route("{articleId}")]
+        [Route("articles/{articleId}")]
         public async Task<ActionResult<ArticleDTO?>> GetArticle(int ArticleId)
         {
             ArticleDTO? articleDTO = await articleService.GetArticleAsync(ArticleId);
@@ -30,13 +30,14 @@ namespace Conduit.Presentation.Controllers
             return Ok(articleDTO);
         }
         [HttpPost]
+        [Route("articles")]
         public async Task<ActionResult<ArticleDTO>> PostArticle(ArticleForInsertDTO articleForInsertDTO)
         {
             ArticleDTO? articleDTO = await articleService.AddArticleAsync(articleForInsertDTO);
             return CreatedAtRoute("GetArticle", articleDTO, articleDTO);
         }
         [HttpDelete]
-        [Route("{articleId}")]
+        [Route("articles/{articleId}")]
         public async Task<ActionResult> DeleteArticle(int ArticleId)
         {
             ArticleDTO? articleDTO = await articleService.GetArticleAsync(ArticleId);
@@ -48,7 +49,7 @@ namespace Conduit.Presentation.Controllers
             return NoContent();
         }
         [HttpPut]
-        [Route("{articleId}")]
+        [Route("articles/{articleId}")]
         public async Task<ActionResult> PutArticle(ArticleForUpdateDTO articleForUpdateDTO, int ArticleId)
         {
             var articleForUpdateValidationResult = articleForUpdateValidator.Validate(articleForUpdateDTO);
@@ -73,7 +74,7 @@ namespace Conduit.Presentation.Controllers
             }
         }
         [HttpGet]
-        [Route("users/{userId}")]
+        [Route("users/{userId}/articles")]
         public async Task<ActionResult<IEnumerable<ArticleDTO>>> GetUserArticles(int UserId)
             {
             IEnumerable<ArticleDTO> articles= await articleService.GetUserArticlesAsync(UserId);   

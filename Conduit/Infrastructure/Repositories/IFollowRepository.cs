@@ -9,5 +9,6 @@ namespace Conduit.Infrastructure.Repositories
         public Task<IEnumerable<UserFollowers>> GetAllUserFollowers(int UserId);
         public void DeleteUserFollowers(UserFollowers userFollower);
         public Task<bool> SaveChangesAsync();
+        public void ClearTracking();
     }
 }

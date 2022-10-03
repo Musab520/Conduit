@@ -15,15 +15,17 @@ namespace Conduit.Core.Services
             this.favoriteArticlesRepository = favoriteArticlesRepository ?? throw new ArgumentNullException(nameof(favoriteArticlesRepository));
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
-        public async Task AddFavoriteArticle(FavoriteArticlesForInsertDTO favoriteArticle)
+        public async Task<FavoriteArticlesDTO> AddFavoriteArticle(FavoriteArticlesForInsertDTO favoriteArticle)
         {
             FavoriteArticles favorite = mapper.Map<FavoriteArticles>(favoriteArticle);
             await favoriteArticlesRepository.AddFavoriteArticle(favorite);
-            await favoriteArticlesRepository.AddFavoriteArticle(favorite);
+            await favoriteArticlesRepository.SaveChangesAsync();
+            return mapper.Map<FavoriteArticlesDTO>(favorite);
         }
 
         public async Task<bool> DeleteFavoriteArticle(FavoriteArticlesDTO favoriteDTO)
         {
+            favoriteArticlesRepository.ClearTracking();
             FavoriteArticles? favorite= mapper.Map<FavoriteArticles>(favoriteDTO);
             favoriteArticlesRepository.DeleteFavoriteArticle(favorite);
             return await favoriteArticlesRepository.SaveChangesAsync();

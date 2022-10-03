@@ -9,6 +9,7 @@ namespace Conduit.Infrastructure.Repositories
         public Task<FavoriteArticles?> GetFavoriteArticle(int favoriteArticleId);
         public void DeleteFavoriteArticle(FavoriteArticles favoriteArticle);
         public Task<bool> SaveChangesAsync();
+        public void ClearTracking();
 
     }
 }

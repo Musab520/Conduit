@@ -16,14 +16,16 @@ namespace Conduit.Core.Services
             this.userFollowersRepository = userFollowersRepository ?? throw new ArgumentNullException(nameof(userFollowersRepository));
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
-        public async Task AddFollower(FollowersForInsertDTO followerForInsert)
+        public async Task<FollowerDTO> AddFollower(FollowersForInsertDTO followerForInsert)
         {
             UserFollowers follower = mapper.Map<UserFollowers>(followerForInsert);
             await userFollowersRepository.AddFollower(follower);
             await userFollowersRepository.SaveChangesAsync();
+            return mapper.Map<FollowerDTO>(follower);
         }
         public async Task<bool> DeleteUserFollowers(FollowerDTO followerDTO)
         {
+            userFollowersRepository.ClearTracking();
             UserFollowers? follower = mapper.Map<UserFollowers>(followerDTO);
             userFollowersRepository.DeleteUserFollowers(follower);
             return await userFollowersRepository.SaveChangesAsync();
@@ -32,6 +34,14 @@ namespace Conduit.Core.Services
         {
             IEnumerable<UserFollowers> userFollowers= await userFollowersRepository.GetAllUserFollowers(UserId);
             return mapper.Map<IEnumerable<FollowerDTO>>(userFollowers);
+        }
+
+        public async Task<FollowerDTO?> GetFollower(int userFollowerId)
+        {
+           UserFollowers? follower= await userFollowersRepository.GetFollower(userFollowerId);
+            if (follower == null)
+                return null;
+           return mapper.Map<FollowerDTO>(follower);
         }
     }
 }

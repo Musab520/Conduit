@@ -24,6 +24,8 @@ builder.Services.AddScoped<IFollowRepository, FollowRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IArticleService, ArticleService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped<IFavoriteArticleService, FavoriteArticleService>();
+builder.Services.AddScoped<IUserFollowersService,UserFollowersServices>();
 
 var app = builder.Build();
 app.UseHttpsRedirection();

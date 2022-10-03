@@ -35,5 +35,9 @@ namespace Conduit.Infrastructure.Repositories
         {
             return (await conduitDbContext.SaveChangesAsync() >= 0);
         }
+        public void ClearTracking()
+        {
+            conduitDbContext.ChangeTracker.Clear();
+        }
     }
 }

@@ -58,14 +58,14 @@ namespace Conduit.Presentation.Controllers
             return NoContent();
         }
         [HttpGet]
-        [Route("comments/users/{userId}")]
+        [Route("users/{userId}")]
         public async Task<ActionResult<IEnumerable<CommentDTO>>> GetUserComments(int UserId)
         {
             IEnumerable<CommentDTO> comments= await commentService.GetUserComments(UserId); 
             return Ok(comments);    
         }
         [HttpGet]
-        [Route("comments/articles/{articleId}")]
+        [Route("articles/{articleId}")]
         public async Task<ActionResult<IEnumerable<CommentDTO>>> GetArticleComments(int articleId)
         {
             IEnumerable<CommentDTO> comments = await commentService.GetArticleComments(articleId);

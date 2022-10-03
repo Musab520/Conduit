@@ -75,7 +75,7 @@ namespace Conduit.Presentation.Controllers
             }
         }
         [HttpGet]
-        [Route("articles/users/{userid}")]
+        [Route("users/{userid}")]
         public async Task<ActionResult<IEnumerable<ArticleDTO>>> GetUserArticles(int UserId)
             {
             IEnumerable<ArticleDTO> articles= await articleService.GetUserArticlesAsync(UserId);   

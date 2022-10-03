@@ -28,7 +28,6 @@ namespace Conduit.Presentation.Controllers
             return Ok(favoriteArticleDTO);  
         }
         [HttpPost]
-        [Route("articles/{articleId}")]
         public async Task<ActionResult<FavoriteArticlesDTO>> PostFavoriteArticle(FavoriteArticlesForInsertDTO favoriteArticleForInsertDTO)
         {
           FavoriteArticlesDTO favoriteArticlesDTO =  await favoriteArticleService.AddFavoriteArticle(favoriteArticleForInsertDTO);
@@ -47,7 +46,7 @@ namespace Conduit.Presentation.Controllers
             return NoContent();
         }
         [HttpGet]
-        [Route("favoriteArticles/users/{userId}")]
+        [Route("users/{userId}")]
         public async Task<ActionResult<IEnumerable<FavoriteArticlesDTO>>> GetUserFavoriteArticles(int UserId)
         {
             IEnumerable<FavoriteArticlesDTO> favArticles=await favoriteArticleService.GetAllFavoriteArticles(UserId);

@@ -9,6 +9,7 @@ namespace Conduit.Core.Mappers
         public UserFollowersProfile()
         {
             CreateMap<FollowerDTO, UserFollowers>();
+            CreateMap<UserFollowers,FollowerDTO>();
             CreateMap<FollowersForInsertDTO, UserFollowers>();
         }
     }

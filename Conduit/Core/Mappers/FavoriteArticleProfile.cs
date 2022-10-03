@@ -9,6 +9,7 @@ namespace Conduit.Core.Mappers
         public FavoriteArticleProfile()
         {
             CreateMap<FavoriteArticlesDTO,FavoriteArticles>();
+            CreateMap<FavoriteArticles,FavoriteArticlesDTO>();
             CreateMap<FavoriteArticlesForInsertDTO, FavoriteArticles>();
         }
     }

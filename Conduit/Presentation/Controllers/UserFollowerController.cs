@@ -8,7 +8,7 @@ namespace Conduit.Presentation.Controllers
 {
    
     [ApiController]
-    [Route("api")]
+    [Route("api/followers")]
     [Authorize]
     public class UserFollowerController : Controller
     {
@@ -18,21 +18,20 @@ namespace Conduit.Presentation.Controllers
             this.followersService = followersService ?? throw new ArgumentNullException(nameof(followersService));
         }
         [HttpGet]
-       [Route("users/{userId}/followers")]
+       [Route("followers/users/{userId}")]
        public async Task<ActionResult<IEnumerable<FollowerDTO>>> GetUserFollowers(int UserId)
         {
             IEnumerable<FollowerDTO?> followers = await followersService.GetAllUserFollowers(UserId);
             return Ok(followers); 
         }
         [HttpPost]
-        [Route("followers")]
         public async Task<ActionResult<FollowerDTO>> AddFollower(FollowersForInsertDTO followerForInsertDTO)
         {
             FollowerDTO? followerDTO = await followersService.AddFollower(followerForInsertDTO);
             return CreatedAtRoute("GetFollower",followerDTO,followerDTO);
         }
         [HttpGet(Name ="GetFollower")]
-        [Route("followers")]
+        [Route("{followerId}")]
         public async Task<ActionResult<FollowerDTO>> GetFollower(int UserFollowerId)
         {
             FollowerDTO? followerDTO= await followersService.GetFollower(UserFollowerId);
@@ -43,7 +42,6 @@ namespace Conduit.Presentation.Controllers
             return Ok(followerDTO);
         }
         [HttpDelete]
-        [Route("followers")]
         public async Task<ActionResult> DeleteFollower(int UserFollowerId)
         {
             FollowerDTO? followerDTO = await followersService.GetFollower(UserFollowerId);

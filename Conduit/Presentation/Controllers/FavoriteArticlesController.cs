@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Conduit.Presentation.Controllers
 {
     [ApiController]
-    [Route("api")]
+    [Route("api/favoriteArticles")]
     [Authorize]
     public class FavoriteArticlesController : Controller
     {
@@ -17,7 +17,7 @@ namespace Conduit.Presentation.Controllers
             this.favoriteArticleService = favoriteArticleService ?? throw new ArgumentNullException(nameof(favoriteArticleService));
         }
         [HttpGet(Name = "GetFavoriteArticle")]
-        [Route("favoriteArticles/{favoriteArticleId}")]
+        [Route("{favoriteArticleId}")]
         public async Task<ActionResult<FavoriteArticlesDTO>> GetFavoriteArticle(int FavoriteArticleId)
         {
             FavoriteArticlesDTO? favoriteArticleDTO = await favoriteArticleService.GetFavoriteArticle(FavoriteArticleId); 
@@ -28,14 +28,14 @@ namespace Conduit.Presentation.Controllers
             return Ok(favoriteArticleDTO);  
         }
         [HttpPost]
-        [Route("articles/{articleId}/favoriteArticles")]
+        [Route("articles/{articleId}")]
         public async Task<ActionResult<FavoriteArticlesDTO>> PostFavoriteArticle(FavoriteArticlesForInsertDTO favoriteArticleForInsertDTO)
         {
           FavoriteArticlesDTO favoriteArticlesDTO =  await favoriteArticleService.AddFavoriteArticle(favoriteArticleForInsertDTO);
             return CreatedAtRoute("GetFavoriteArticle", favoriteArticlesDTO, favoriteArticlesDTO);
         }
         [HttpDelete]
-        [Route("favoriteArticles")]
+        [Route("{favoriteArticleId}")]
         public async Task<ActionResult> DeleteFavoriteArticle(int FavoriteArticleId)
         {
             FavoriteArticlesDTO? favoriteArticleDTO = await favoriteArticleService.GetFavoriteArticle(FavoriteArticleId);
@@ -47,7 +47,7 @@ namespace Conduit.Presentation.Controllers
             return NoContent();
         }
         [HttpGet]
-        [Route("users/{userId}/favoriteArticles")]
+        [Route("favoriteArticles/users/{userId}")]
         public async Task<ActionResult<IEnumerable<FavoriteArticlesDTO>>> GetUserFavoriteArticles(int UserId)
         {
             IEnumerable<FavoriteArticlesDTO> favArticles=await favoriteArticleService.GetAllFavoriteArticles(UserId);

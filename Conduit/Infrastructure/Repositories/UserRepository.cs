@@ -19,6 +19,10 @@ namespace Conduit.Infrastructure.Repositories
         {
             return await conduitDbContext.UserTbls.FirstOrDefaultAsync(user => user.UserId == UserId);
         }
+        public async Task<User?> GetUserFromUsername(string username)
+        {
+            return await conduitDbContext.UserTbls.FirstOrDefaultAsync(user => user.Username == username);
+        }
         public async Task<bool> SaveChangesAsync()
         {
             return (await  conduitDbContext.SaveChangesAsync() >= 0);

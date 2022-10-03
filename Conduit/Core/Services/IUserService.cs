@@ -11,5 +11,6 @@ namespace Conduit.Core.Services
         public Task<UserDTO?> AddUserAsync(UserForInsertDTO userforInsert);
         public Task<UserDTO?> GetUserAsync(int UserId);
         public Task UpdateUserAsync(UserForUpdateDTO userForUpdateDTO,int UserId);
+        public Task<UserDTO?> GetUserFromUserName(string userName); 
     }
 }

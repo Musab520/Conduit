@@ -2,6 +2,7 @@
 using Conduit.Core.Services;
 using Conduit.Core.Validators;
 using Conduit.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace Conduit.Presentation.Controllers
 {
     [ApiController]
     [Route("api/users")]
+    [Authorize]
     public class UserController : Controller
     {
         private readonly IUserService userService;

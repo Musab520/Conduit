@@ -39,6 +39,15 @@ namespace Conduit.Core.Services
             return mapper.Map<UserDTO>(user);
           
         }
+        public async Task<UserDTO?> GetUserFromUserName(string username)
+        {
+            User? user = await userRepository.GetUserFromUsername(username);
+            if(user == null)
+            {
+                return null;
+            }
+            return mapper.Map<UserDTO>(user);
+        }
 
         public async Task UpdateUserAsync(UserForUpdateDTO userForUpdate,int UserId)
         {

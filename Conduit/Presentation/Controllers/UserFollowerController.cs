@@ -1,5 +1,6 @@
 ﻿using Conduit.Core.DTOModels;
 using Conduit.Core.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace Conduit.Presentation.Controllers
    
     [ApiController]
     [Route("api")]
+    [Authorize]
     public class UserFollowerController : Controller
     {
         private readonly IUserFollowersService followersService;

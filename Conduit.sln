@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Conduit", "Conduit\Conduit.csproj", "{CE3810AA-501C-4010-BA67-27684515AB0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConduitTests", "ConduitTests\ConduitTests.csproj", "{9806AF75-D43F-4822-83A8-447A12F5A02B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConduitTests", "ConduitTests\ConduitTests.csproj", "{9806AF75-D43F-4822-83A8-447A12F5A02B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

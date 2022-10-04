@@ -13,7 +13,7 @@ namespace ConduitTests.Mocks
     {
         public static Mock<IUserRepository> GetUserRepository()
         {
-            var users = new List<User?>
+            var users = new List<User>
             {
                 new User { UserId=1,Username="Admin",Password="Admin123",FullName="Admin"},
                 new User { UserId=2,Username="musab",Password="musab123",FullName="Musab Abuasi"},
@@ -24,8 +24,9 @@ namespace ConduitTests.Mocks
             };
             var mockUserRepository = new Mock<IUserRepository>();
             Random random=new Random(100);
-            mockUserRepository.Setup(x => x.AddUser(new User { Username = "dummy" + random.Next(), Password = "dummy123", FullName = "Dummy Dum Dum" })).Returns(Task.CompletedTask);
-            mockUserRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult(users.FirstOrDefault(user=>user.UserId==It.)));
+            mockUserRepository.Setup(x => x.AddUser(It.IsAny<User>())).Returns(Task.CompletedTask);
+            mockUserRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns((int i)=>Task.FromResult(users.FirstOrDefault(user=>user.UserId==i)));
+            mockUserRepository.Setup(x => x.GetUserFromUsername(It.IsAny<string>())).Returns((string s) => Task.FromResult(users.FirstOrDefault(user => user.Username == s)));
             return mockUserRepository;
         }
         public static Mock<IArticleRepository> GetArticleRepository()
@@ -40,11 +41,10 @@ namespace ConduitTests.Mocks
                      new Article {ArticleId=6,UserId=3,ArticleTitle="Shark Tank",ArticleBody="Royalties Royalties",date=DateTime.Now},
             };
             var mockArticleRepository = new Mock<IArticleRepository>();
-            mockArticleRepository.Setup(x => x.AddArticle(It.IsAny<Article>())).Returns(Task.CompletedTask);
-            mockArticleRepository.Setup(x => x.GetArticle(It.IsAny<int>())).Returns(Task.FromResult(articles[0]));
+            mockArticleRepository.Setup(x => x.AddArticle(It.IsAny<Article>()));
+            mockArticleRepository.Setup(x => x.GetArticle(It.IsAny<int>())).Returns((int i)=>Task.FromResult(articles.FirstOrDefault(article=>article.ArticleId==i)));
             mockArticleRepository.Setup(x => x.DeleteArticle(It.IsAny<Article>()));
-            int userId = It.IsAny<int>();
-            mockArticleRepository.Setup(x => x.GetUserArticles(userId)).Returns(Task.FromResult(articles.Where(article=>article.UserId==userId)));
+            mockArticleRepository.Setup(x => x.GetUserArticles(It.IsAny<int>())).Returns((int i)=>Task.FromResult(articles.Where(article=>article.UserId==i)));
             return mockArticleRepository;
 
         }

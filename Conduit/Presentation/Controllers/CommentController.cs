@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Conduit.Presentation.Controllers
 {
     [ApiController]
-    [Route("api/comments")]
+    [Route("api")]
     [Authorize]
     public class CommentController : Controller
     {
@@ -21,7 +21,7 @@ namespace Conduit.Presentation.Controllers
             this.commentForInsertValidator = commentForInsertValidator ?? throw new ArgumentNullException(nameof(commentForInsertValidator));
         }
         [HttpGet(Name ="GetComment")]
-        [Route("{commentId}")]
+        [Route("comments/{commentId}")]
         public async Task<ActionResult<CommentDTO>> GetComment(int CommentId)
         {
            CommentDTO? comment= await commentService.GetComment(CommentId);
@@ -30,6 +30,7 @@ namespace Conduit.Presentation.Controllers
             return Ok(comment);
         }
         [HttpPost]
+        [Route("comments")]
         public async Task<ActionResult<CommentForInsertDTO>> PostComment(CommentForInsertDTO commentForInsert)
         {
            var commentForInsertValidationResult = commentForInsertValidator.Validate(commentForInsert);
@@ -46,7 +47,7 @@ namespace Conduit.Presentation.Controllers
             }
         } 
         [HttpDelete]
-        [Route("{commentId}")]
+        [Route("comments/{commentId}")]
         public async Task<ActionResult> DeleteComment(int CommentId)
         {
             CommentDTO? commentDTO=await commentService.GetComment(CommentId);
@@ -58,14 +59,14 @@ namespace Conduit.Presentation.Controllers
             return NoContent();
         }
         [HttpGet]
-        [Route("users/{userId}")]
+        [Route("users/{userId}/comments")]
         public async Task<ActionResult<IEnumerable<CommentDTO>>> GetUserComments(int UserId)
         {
             IEnumerable<CommentDTO> comments= await commentService.GetUserComments(UserId); 
             return Ok(comments);    
         }
         [HttpGet]
-        [Route("articles/{articleId}")]
+        [Route("articles/{articleId}/comments")]
         public async Task<ActionResult<IEnumerable<CommentDTO>>> GetArticleComments(int articleId)
         {
             IEnumerable<CommentDTO> comments = await commentService.GetArticleComments(articleId);

@@ -11,7 +11,7 @@ using Xunit;
 
 namespace ConduitTests
 {
-    public class ArticleControllerTests
+    public class ArticleRepositoryTests
     {
         Mock<IArticleRepository> articleRepository = RepositoryMocks.GetArticleRepository();
         [Fact]
@@ -40,7 +40,7 @@ namespace ConduitTests
         {
             Random random = new Random();
             int rand = random.Next(100);
-            Article a = new Article { ArticleId = rand, ArticleTitle = "dummy" + rand, ArticleBody = "dummy123" };
+            Article a = new Article { ArticleId = 1, ArticleTitle = "dummy" + rand, ArticleBody = "dummy123" };
             articleRepository.Object.DeleteArticle(a);
             articleRepository.Verify(x => x.DeleteArticle(a));
         }

@@ -48,17 +48,73 @@ namespace ConduitTests.Mocks
             return mockArticleRepository;
 
         }
-        //public static Mock<ICommentRepository> GetCommentRepository()
-        //{
-
-        //}
-        //public static Mock<IFavoriteArticlesRepository> GetFavoriteArticlesRepository()
-        //{
-
-        //}
-        //public static Mock<IFollowRepository> GetUserFollowersRepository()
-        //{
-
-        //}
+        public static Mock<ICommentRepository> GetCommentRepository()
+        {
+            var comments = new List<Comment>
+            {
+                new Comment{CommentId=1,ArticleId=1,UserId=1,BodyText="WOO",date=DateTime.Now},
+                new Comment{CommentId=2,ArticleId=1,UserId=2,BodyText="WOO",date=DateTime.Now},
+                new Comment{CommentId=3,ArticleId=2,UserId=2,BodyText="WOO",date=DateTime.Now},
+                new Comment{CommentId=4,ArticleId=2,UserId=3,BodyText="WOO",date=DateTime.Now},
+                new Comment{CommentId=5,ArticleId=3,UserId=3,BodyText="WOO",date=DateTime.Now},
+                new Comment{CommentId=6,ArticleId=3,UserId=4,BodyText="WOO",date=DateTime.Now},
+                new Comment{CommentId=7,ArticleId=4,UserId=4,BodyText="WOO",date=DateTime.Now},
+                new Comment{CommentId=8,ArticleId=4,UserId=5,BodyText="WOO",date=DateTime.Now},
+                new Comment{CommentId=9,ArticleId=5,UserId=5,BodyText="WOO",date=DateTime.Now},
+                new Comment{CommentId=10,ArticleId=5,UserId=6,BodyText="WOO",date=DateTime.Now}
+            };
+            var mockCommentRepository =new Mock<ICommentRepository>();
+            mockCommentRepository.Setup(x => x.AddComment(It.IsAny<Comment>()));
+            mockCommentRepository.Setup(x => x.GetComment(It.IsAny<int>())).Returns((int i) => Task.FromResult(comments.FirstOrDefault(comment => comment.CommentId == i)));
+            mockCommentRepository.Setup(x => x.DeleteComment(It.IsAny<Comment>()));
+            mockCommentRepository.Setup(x => x.GetUserComments(It.IsAny<int>())).Returns((int i) => Task.FromResult(comments.Where(comment => comment.UserId == i)));
+            mockCommentRepository.Setup(x => x.GetArticleComments(It.IsAny<int>())).Returns((int i) => Task.FromResult(comments.Where(comment => comment.ArticleId == i)));
+            return mockCommentRepository;
+        }
+        public static Mock<IFavoriteArticlesRepository> GetFavoriteArticlesRepository()
+        {
+            var favorites = new List<FavoriteArticles>
+            {
+                new FavoriteArticles { FavoriteArticlesId = 1,ArticleId=1,UserId=1 },
+                new FavoriteArticles { FavoriteArticlesId = 2,ArticleId=2,UserId=1 },
+                new FavoriteArticles { FavoriteArticlesId = 3,ArticleId=3,UserId=1 },
+                new FavoriteArticles { FavoriteArticlesId = 4,ArticleId=4,UserId=2 },
+                new FavoriteArticles { FavoriteArticlesId = 5,ArticleId=5,UserId=2 },
+                new FavoriteArticles { FavoriteArticlesId = 6,ArticleId=6,UserId=2 },
+                new FavoriteArticles { FavoriteArticlesId = 7,ArticleId=1,UserId=3 },
+                new FavoriteArticles { FavoriteArticlesId = 8,ArticleId=2,UserId=3 },
+                new FavoriteArticles { FavoriteArticlesId = 9,ArticleId=3,UserId=3 },
+                new FavoriteArticles { FavoriteArticlesId = 10,ArticleId=4,UserId=4 },
+                new FavoriteArticles { FavoriteArticlesId = 11,ArticleId=5,UserId=4 },
+            };
+            var mockFavoriteArticlesRepository = new Mock<IFavoriteArticlesRepository>();
+            mockFavoriteArticlesRepository.Setup(x => x.AddFavoriteArticle(It.IsAny<FavoriteArticles>()));
+            mockFavoriteArticlesRepository.Setup(x => x.GetFavoriteArticle(It.IsAny<int>())).Returns((int i) => Task.FromResult(favorites.FirstOrDefault(favorite => favorite.FavoriteArticlesId == i)));
+            mockFavoriteArticlesRepository.Setup(x => x.DeleteFavoriteArticle(It.IsAny<FavoriteArticles>()));
+            mockFavoriteArticlesRepository.Setup(x => x.GetAllFavoriteArticles(It.IsAny<int>())).Returns((int i)=>Task.FromResult(favorites.Where(favorite=>favorite.UserId==i)));
+            return mockFavoriteArticlesRepository;
+        }
+        public static Mock<IFollowRepository> GetUserFollowersRepository()
+        {
+            var followers = new List<UserFollowers>
+            {
+                new UserFollowers{UserFollowersId = 1,UserId=1,FollowerId=1},
+                new UserFollowers{UserFollowersId = 2,UserId=1,FollowerId=2},
+                new UserFollowers{UserFollowersId = 3,UserId=1,FollowerId=3},
+                new UserFollowers{UserFollowersId = 4,UserId=2,FollowerId=4},
+                new UserFollowers{UserFollowersId = 5,UserId=2,FollowerId=5},
+                new UserFollowers{UserFollowersId = 6,UserId=2,FollowerId=6},
+                new UserFollowers{UserFollowersId = 7,UserId=3,FollowerId=7},
+                new UserFollowers{UserFollowersId = 8,UserId=3,FollowerId=8},
+                new UserFollowers{UserFollowersId = 9,UserId=3,FollowerId=9},
+                new UserFollowers{UserFollowersId = 10,UserId=4,FollowerId=1}
+            };
+            var mockUserFollowersRepository = new Mock<IFollowRepository>();
+            mockUserFollowersRepository.Setup(x => x.AddFollower(It.IsAny<UserFollowers>()));
+            mockUserFollowersRepository.Setup(x => x.GetFollower(It.IsAny<int>())).Returns((int i) => Task.FromResult(followers.FirstOrDefault(follower => follower.UserFollowersId== i)));
+            mockUserFollowersRepository.Setup(x => x.DeleteUserFollowers(It.IsAny<UserFollowers>()));
+            mockUserFollowersRepository.Setup(x => x.GetAllUserFollowers(It.IsAny<int>())).Returns((int i) => Task.FromResult(followers.Where(follower => follower.UserId == i)));
+            return mockUserFollowersRepository;
+        }
     }
 }

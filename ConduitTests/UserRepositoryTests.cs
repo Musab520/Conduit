@@ -10,7 +10,7 @@ using Xunit;
 
 namespace ConduitTests
 {
-    public class UserControllerTests
+    public class UserRepositoryTests
     {
         Mock<IUserRepository> userRepository = RepositoryMocks.GetUserRepository();
       

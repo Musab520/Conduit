@@ -37,15 +37,14 @@ namespace Conduit.Presentation.Controllers
         [HttpPost]
         public async Task<ActionResult<UserForInsertDTO>> PostUser(UserForInsertDTO userForInsertDTO)
         {
-
+            if (userService.GetUserFromUserName(userForInsertDTO.Username) != null)
+            {
+                return BadRequest("400: Username is Taken");
+            }
             var userForInsertValidationResult = userForInsertValidator.Validate(userForInsertDTO);
             if (userForInsertValidationResult.IsValid)
             {
                 UserDTO? userDTO = await userService.AddUserAsync(userForInsertDTO);
-                if (userDTO == null)
-                {
-                    return BadRequest("400: Username is Taken");
-                }
                 return CreatedAtRoute("GetUser", userDTO, userDTO);
             }
             else
@@ -59,6 +58,10 @@ namespace Conduit.Presentation.Controllers
         [Route("{userId}")]
         public async Task<ActionResult> PutUser(UserForUpdateDTO userForUpdateDTO,int UserId)
         {
+            if(userService.GetUserFromUserName(userForUpdateDTO.Username) != null)
+            {
+                return BadRequest("400: Username is Taken");
+            }
             var userForUpdateValidationResult=userForUpdateValidator.Validate(userForUpdateDTO);
             if(userForUpdateValidationResult.IsValid)
             {
@@ -69,8 +72,8 @@ namespace Conduit.Presentation.Controllers
                 }
                 else
                 {
-                    await userService.UpdateUserAsync(userForUpdateDTO, UserId);
-                    return NoContent();
+                   UserDTO? userReturnDTO= await userService.UpdateUserAsync(userForUpdateDTO, UserId);
+                    return AcceptedAtRoute("GetUser",userReturnDTO,userReturnDTO);
                 }
             }
             else

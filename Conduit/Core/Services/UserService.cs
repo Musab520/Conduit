@@ -24,14 +24,9 @@ namespace Conduit.Core.Services
         public async Task<UserDTO?> AddUserAsync(UserForInsertDTO userForInsert)
         {
               User user =  mapper.Map<UserForInsertDTO, User>(userForInsert);
-              User? userCheckForUsername=await userRepository.GetUserFromUsername(user.Username); 
-              if (userCheckForUsername != null)
-            {
-                return null;
-            }
               await userRepository.AddUser(user);
               await userRepository.SaveChangesAsync();
-              return mapper.Map<UserDTO>(user);
+              return mapper.Map<User,UserDTO>(user);
         }
 
         public async Task<UserDTO?> GetUserAsync(int UserId)
@@ -41,7 +36,7 @@ namespace Conduit.Core.Services
             {
                 return null;
             }
-            return mapper.Map<UserDTO>(user);
+            return mapper.Map<User,UserDTO>(user);
           
         }
         public async Task<UserDTO?> GetUserFromUserName(string username)
@@ -54,11 +49,12 @@ namespace Conduit.Core.Services
             return mapper.Map<UserDTO>(user);
         }
 
-        public async Task UpdateUserAsync(UserForUpdateDTO userForUpdate,int UserId)
+        public async Task<UserDTO?> UpdateUserAsync(UserForUpdateDTO userForUpdate,int UserId)
         {
             User user = await userRepository.GetUser(UserId);
             mapper.Map(userForUpdate,user);
             await userRepository.SaveChangesAsync();
+            return mapper.Map<User,UserDTO>(user);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Conduit.Presentation.Controllers
             this.followersService = followersService ?? throw new ArgumentNullException(nameof(followersService));
         }
         [HttpGet]
-       [Route("users/{userId/followers}")]
+       [Route("users/{userId}/followers")]
        public async Task<ActionResult<IEnumerable<FollowerDTO>>> GetUserFollowers(int UserId)
         {
             IEnumerable<FollowerDTO?> followers = await followersService.GetAllUserFollowers(UserId);

@@ -24,6 +24,11 @@ namespace Conduit.Core.Services
         public async Task<UserDTO?> AddUserAsync(UserForInsertDTO userForInsert)
         {
               User user =  mapper.Map<UserForInsertDTO, User>(userForInsert);
+              User? userCheckForUsername=await userRepository.GetUserFromUsername(user.Username); 
+              if (userCheckForUsername != null)
+            {
+                return null;
+            }
               await userRepository.AddUser(user);
               await userRepository.SaveChangesAsync();
               return mapper.Map<UserDTO>(user);

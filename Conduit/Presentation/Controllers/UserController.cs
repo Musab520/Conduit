@@ -37,10 +37,15 @@ namespace Conduit.Presentation.Controllers
         [HttpPost]
         public async Task<ActionResult<UserForInsertDTO>> PostUser(UserForInsertDTO userForInsertDTO)
         {
+
             var userForInsertValidationResult = userForInsertValidator.Validate(userForInsertDTO);
             if (userForInsertValidationResult.IsValid)
             {
                 UserDTO? userDTO = await userService.AddUserAsync(userForInsertDTO);
+                if (userDTO == null)
+                {
+                    return BadRequest("400: Username is Taken");
+                }
                 return CreatedAtRoute("GetUser", userDTO, userDTO);
             }
             else

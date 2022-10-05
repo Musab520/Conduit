@@ -3,6 +3,8 @@ using Conduit.Core.Validators;
 using Conduit.Infrastructure.Repositories;
 using Conduit.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Linq;
 using System.Text;
@@ -11,7 +13,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<ConduitDBContext>(dbContextOptions => dbContextOptions.UseSqlServer(builder.Configuration["ConnectionStrings:ConduitDB"]).EnableSensitiveDataLogging());
-builder.Services.AddScoped<ConduitDBContext>();
+//builder.Services.AddScoped<ConduitDBContext>();
+builder.Services.AddDbContextFactory<ConduitDBContext>(options=>options.EnableSensitiveDataLogging(),ServiceLifetime.Scoped);
+//builder.Services.AddSingleton<IDbContextFactory<ConduitDBContext>,DbContextFactory<ConduitDBContext>>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<UserForInsertValidator>();
 builder.Services.AddScoped<UserForUpdateValidator>();

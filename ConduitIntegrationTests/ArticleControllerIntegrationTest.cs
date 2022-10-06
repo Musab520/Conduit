@@ -12,10 +12,10 @@ using Xunit;
 
 namespace ConduitIntegrationTests
 {
-    public class UserControllerIntegrationTest : IClassFixture<TestingWebAppFactory<Startup>>
+    public class ArticleControllerIntegrationTest : IClassFixture<TestingWebAppFactory<Startup>>
     {
         private readonly HttpClient _client;
-        public UserControllerIntegrationTest(TestingWebAppFactory<Startup> factory)
+        public ArticleControllerIntegrationTest(TestingWebAppFactory<Startup> factory)
         {
             _client = factory.CreateClient();
             _client.DefaultRequestHeaders.Authorization =
@@ -24,10 +24,10 @@ namespace ConduitIntegrationTests
         }
 
         [Fact]
-        public async Task GETUser()
+        public async Task GETArticle()
         {
             // Act
-            var response = await _client.GetAsync("https://localhost:7203/api/users/1");
+            var response = await _client.GetAsync("https://localhost:7203/api/articles/1");
 
             // Assert
             response.EnsureSuccessStatusCode();
@@ -35,12 +35,12 @@ namespace ConduitIntegrationTests
         }
 
         [Fact]
-        public async Task POSTUser()
+        public async Task POSTArticle()
         {
             // Arrange
-            var postRequest = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7203/api/users");
-            UserForInsertDTO userForInsertDTO = new UserForInsertDTO { Username = "bobo", Password = "yoyoyo123", FullName = "Karma" };
-            postRequest.Content = JsonContent.Create(userForInsertDTO);
+            var postRequest = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7203/api/articles");
+            ArticleForInsertDTO articleForInsertDTO = new ArticleForInsertDTO { UserId=1,ArticleTitle="",ArticleBody="",date=DateTime.Now };
+            postRequest.Content = JsonContent.Create(articleForInsertDTO);
 
             // Act
             var response = await _client.SendAsync(postRequest);
@@ -49,14 +49,23 @@ namespace ConduitIntegrationTests
             response.EnsureSuccessStatusCode();
             Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType.ToString());
         }
+        [Fact]
+        public async Task  DELETEArticle()
+        {
+            // Act
+            var response = await _client.DeleteAsync("https://localhost:7203/api/articles/1");
+
+            // Assert
+            response.EnsureSuccessStatusCode();
+        }
 
         [Fact]
         public async Task PUTUser()
         {
             // Arrange
-            var putRequest = new HttpRequestMessage(HttpMethod.Put, "https://localhost:7203/api/users/1");
-            UserForUpdateDTO userForUpdateDTO = new UserForUpdateDTO {Username="FAFAAFAF",Password="JAJAJAJ123", FullName = "Karma" };
-            putRequest.Content = JsonContent.Create(userForUpdateDTO);
+            var putRequest = new HttpRequestMessage(HttpMethod.Put, "https://localhost:7203/api/articles/1");
+            ArticleForUpdateDTO articleForUpdateDTO = new ArticleForUpdateDTO { ArticleTitle = "POPO", ArticleBody = "Jjaj"};
+            putRequest.Content = JsonContent.Create(articleForUpdateDTO);
 
             // Act
             var response = await _client.SendAsync(putRequest);

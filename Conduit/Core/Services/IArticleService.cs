@@ -9,6 +9,6 @@ namespace Conduit.Core.Services
         public Task<ArticleDTO?> GetArticleAsync(int ArticleId);
         public Task<IEnumerable<ArticleDTO>> GetUserArticlesAsync(int UserId);
         public Task<bool> DeleteArticle(ArticleDTO article);
-        public Task UpdateArticleAsync(ArticleForUpdateDTO articleForUpdate,int articleId);
+        public Task<ArticleDTO?> UpdateArticleAsync(ArticleForUpdateDTO articleForUpdate,int articleId);
     }
 }

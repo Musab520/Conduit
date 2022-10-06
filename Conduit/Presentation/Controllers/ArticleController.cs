@@ -64,8 +64,8 @@ namespace Conduit.Presentation.Controllers
                 }
                 else
                 {
-                    await articleService.UpdateArticleAsync(articleForUpdateDTO, ArticleId);
-                    return NoContent();
+                   ArticleDTO? articleDTOReturn= await articleService.UpdateArticleAsync(articleForUpdateDTO, ArticleId);
+                    return AcceptedAtRoute("GetArticle",articleDTOReturn,articleDTOReturn);
                 }
             }
             else

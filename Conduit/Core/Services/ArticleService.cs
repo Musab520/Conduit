@@ -11,7 +11,7 @@ namespace Conduit.Core.Services
         private readonly IArticleRepository articleRepository;
         private readonly IMapper mapper;
 
-        public ArticleService(IArticleRepository articleRepository, IMapper mapper,ArticleForUpdateValidator validator)
+        public ArticleService(IArticleRepository articleRepository, IMapper mapper)
         {
             this.articleRepository = articleRepository ?? throw new ArgumentNullException(nameof(articleRepository));
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
@@ -21,7 +21,7 @@ namespace Conduit.Core.Services
              Article article = mapper.Map<ArticleForInsertDTO, Article>(articleForInsert);
              await articleRepository.AddArticle(article);
              await articleRepository.SaveChangesAsync();
-             return mapper.Map<ArticleDTO>(article);
+             return mapper.Map<Article,ArticleDTO>(article);
         }
         public async Task<bool> DeleteArticle(ArticleDTO articleDTO)
         {
@@ -36,22 +36,21 @@ namespace Conduit.Core.Services
             Article? article= await articleRepository.GetArticle(ArticleId);
             if (article == null)
                 return null;
-            return mapper.Map<ArticleDTO>(article);
+            return mapper.Map<Article,ArticleDTO>(article);
         }
 
         public async Task<IEnumerable<ArticleDTO>> GetUserArticlesAsync(int UserId)
         {
            IEnumerable<Article> articles=await articleRepository.GetUserArticles(UserId);
-           return mapper.Map<IEnumerable<ArticleDTO>>(articles);
+           return mapper.Map<IEnumerable<Article>, IEnumerable<ArticleDTO>>(articles);
         }
 
-        public async Task UpdateArticleAsync(ArticleForUpdateDTO articleForUpdate,int ArticleId)
+        public async Task<ArticleDTO?> UpdateArticleAsync(ArticleForUpdateDTO articleForUpdate,int ArticleId)
         {
                 Article article = await articleRepository.GetArticle(ArticleId);
                 mapper.Map(articleForUpdate, article);
                 await articleRepository.SaveChangesAsync();
-              
-       
-        }
+                return mapper.Map<Article, ArticleDTO>(article);
+        } 
     }
 }

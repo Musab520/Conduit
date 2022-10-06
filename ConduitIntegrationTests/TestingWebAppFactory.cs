@@ -27,7 +27,7 @@ namespace IntegrationTestingProject
 
                 services.AddDbContext<ConduitDBContext>(options =>
                 {
-                    options.UseInMemoryDatabase("InMemoryEmployeeTest");
+                    options.UseInMemoryDatabase("InMemoryConduitTest");
                     options.UseInternalServiceProvider(serviceProvider);
                 });
                 var sp = services.BuildServiceProvider();

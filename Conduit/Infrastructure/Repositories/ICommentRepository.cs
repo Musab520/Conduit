@@ -10,5 +10,7 @@ namespace Conduit.Infrastructure.Repositories
         public Task<IEnumerable<Comment>> GetUserComments(int UserId);
         public void DeleteComment(Comment comment);
         public Task<bool> SaveChangesAsync();
+        public void ClearTracking();
+       
     }
 }

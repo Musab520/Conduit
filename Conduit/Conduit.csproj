@@ -20,7 +20,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\" />
+    <Folder Include="Core\Mappers\" />
+    <Folder Include="Core\Validators\" />
+    <Folder Include="Core\Services\" />
+    <Folder Include="Presentation\Controllers\" />
+    <Folder Include="Presentation\" />
+    <Folder Include="Presentation\Views\" />
   </ItemGroup>
 
 </Project>

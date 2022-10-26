@@ -27,9 +27,18 @@ namespace Conduit.Infrastructure.Repositories
             return await conduitDbContext.FavoriteArticlesTbls.Where(favorite => favorite.UserId == UserId).ToListAsync();
         }
 
+        public async Task<FavoriteArticles?> GetFavoriteArticle(int favoriteArticleId)
+        {
+            return await conduitDbContext.FavoriteArticlesTbls.FirstOrDefaultAsync(article=>article.FavoriteArticlesId==favoriteArticleId);   
+        }
+
         public async Task<bool> SaveChangesAsync()
         {
             return (await conduitDbContext.SaveChangesAsync() >= 0);
+        }
+        public void ClearTracking()
+        {
+            conduitDbContext.ChangeTracker.Clear();
         }
     }
 }

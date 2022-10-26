@@ -1,0 +1,131 @@
+[33mcommit 656b202f19f421258c45772c019480ea57903aca[m[33m ([m[1;36mHEAD -> [m[1;32mPhase4-APIandTesting[m[33m, [m[1;31morigin/Phase4-APIandTesting[m[33m)[m
+Author: Musab Abuasi <abuasimusab@gmail.com>
+Date:   Sat Oct 1 11:03:09 2022 +0300
+
+    Edited Services
+
+[33mcommit a29e9709993fd6af339c27b5af585353ce895970[m
+Author: Musab Abuasi <abuasimusab@gmail.com>
+Date:   Sat Oct 1 11:01:55 2022 +0300
+
+    Added and Edited User Validators and added them as services
+
+[33mcommit d26780de2ac3395c1147ca3320e62b71c831c797[m
+Author: Musab Abuasi <abuasimusab@gmail.com>
+Date:   Sat Oct 1 10:57:31 2022 +0300
+
+    Edited UpdateDTO
+
+[33mcommit 06ed758ff03f1eca7c2c41c2e56fd2576f43ecbe[m
+Author: Musab Abuasi <abuasimusab@gmail.com>
+Date:   Thu Sep 29 20:37:45 2022 +0300
+
+    Edited Repositories and Added Service Layer
+
+[33mcommit ae6b1d2f35f1a7b0d98819f4f7f6764417d4938d[m
+Author: Musab Abuasi <abuasimusab@gmail.com>
+Date:   Thu Sep 29 20:36:04 2022 +0300
+
+    Edited Mappers
+
+[33mcommit 7ed381f470a082dc53d5fd93e5bfb19e6d2fef4d[m
+Author: Musab Abuasi <abuasimusab@gmail.com>
+Date:   Thu Sep 29 20:34:25 2022 +0300
+
+    Edited Validators
+
+[33mcommit bdfd903d23779d48869b1dcc22622f1e132dd877[m
+Author: Musab Abuasi <abuasimusab@gmail.com>
+Date:   Thu Sep 29 20:32:31 2022 +0300
+
+    Added Update DTO models
+
+[33mcommit 879d395275b6e798d20add2bda79e010606d4a79[m
+Author: Musab Abuasi <abuasimusab@gmail.com>
+Date:   Thu Sep 29 09:35:47 2022 +0300
+
+    Added Validators
+
+[33mcommit 686e9af033e3c55cc46f83255f411892b85706af[m
+Author: Musab Abuasi <abuasimusab@gmail.com>
+Date:   Wed Sep 28 14:15:21 2022 +0300
+
+    Added DTOs and Mapping Profiles
+
+[33mcommit b21a795cfc66bb8f0aa376c4922bf9203655c2ad[m[33m ([m[1;31morigin/Phase3-DAL[m[33m, [m[1;32mPhase3-DAL[m[33m)[m
+Author: Musab Abuasi <abuasimusab@gmail.com>
+Date:   Wed Sep 28 12:14:39 2022 +0300
+
+    Fixing Schema Adding Article Date column
+
+[33mcommit 6a01f879355ce077434468e5eb512feded829ad9[m
+Author: Musab Abuasi <abuasimusab@gmail.com>
+Date:   Wed Sep 28 12:08:37 2022 +0300
+
+    Fixing Schem making Username Unique and adding Date Column
+
+[33mcommit 256b1c0f63c8487378e1d9db495d831eb3bdc7b1[m
+Author: Musab Abuasi <abuasimusab@gmail.com>
+Date:   Wed Sep 28 11:17:36 2022 +0300
+
+    Fixed Constructors in Repo
+
+[33mcommit 53b2edebffcba8b8c43c0a08c71ba3ecdf63cf99[m
+Author: Musab Abuasi <abuasimusab@gmail.com>
+Date:   Tue Sep 27 15:16:05 2022 +0300
+
+    Implemented Repositories
+
+[33mcommit 74fb018b2f6f02dc36443e6513aaf4e9cf87bb1d[m
+Author: Musab Abuasi <abuasimusab@gmail.com>
+Date:   Tue Sep 27 15:15:44 2022 +0300
+
+    Edited some minor abstraction details
+
+[33mcommit d0bb9f3b217c0900d28fbaf3ea9b94a87b970717[m
+Author: Musab Abuasi <abuasimusab@gmail.com>
+Date:   Tue Sep 27 12:27:49 2022 +0300
+
+    Added SaveChanges Method
+
+[33mcommit bcf779eed882bb3975ea2de3df2adee2dbfec111[m
+Author: Musab Abuasi <abuasimusab@gmail.com>
+Date:   Tue Sep 27 11:45:49 2022 +0300
+
+    Create Repo Interfaces
+
+[33mcommit 6a8faa1c76ccf138d63abe62d0370937e7a14f46[m
+Author: Musab Abuasi <abuasimusab@gmail.com>
+Date:   Tue Sep 27 10:44:41 2022 +0300
+
+    Changed Database Schema and redid migrations
+
+[33mcommit 79d285c165b8c170b7cba0bc93bc8b6c21b4cc3d[m
+Author: Musab Abuasi <abuasimusab@gmail.com>
+Date:   Mon Sep 26 15:48:43 2022 +0300
+
+    Adding DbContext as a Scoped service
+
+[33mcommit 0cd8d72680d829abb064885eab9c7e7cb0a9a20d[m
+Author: Musab Abuasi <abuasimusab@gmail.com>
+Date:   Mon Sep 26 15:15:22 2022 +0300
+
+    Added Initial Migrations as Well as Seeding Database
+
+[33mcommit 6381c97daf75b6e3e427d59b8bc4db6e14ae4644[m[33m ([m[1;32mSeedingDatabase[m[33m)[m
+Author: Musab Abuasi <abuasimusab@gmail.com>
+Date:   Mon Sep 26 12:30:27 2022 +0300
+
+    Finsished Skeleton Project
+
+[33mcommit 5ff540ad43a859df26d818a4976e49491f414917[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m
+Author: Musab Abuasi <abuasimusab@gmail.com>
+Date:   Mon Sep 26 12:12:21 2022 +0300
+
+    Added DbContext and Models
+
+[33mcommit 6605bf6a86fb2dabadbfb5bdaead404aabd7aa32[m
+Author: Musab Abuasi <abuasimusab@gmail.com>
+Date:   Mon Sep 26 11:07:27 2022 +0300
+
+    Initialized Project

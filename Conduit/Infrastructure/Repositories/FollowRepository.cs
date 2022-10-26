@@ -26,9 +26,18 @@ namespace Conduit.Infrastructure.Repositories
             return await conduitDbContext.UserFollowersTbls.Where(follower=>follower.UserId==UserId).ToListAsync();
         }
 
+        public async Task<UserFollowers?> GetFollower(int UserFollowersId)
+        {
+            return await conduitDbContext.UserFollowersTbls.FirstOrDefaultAsync(user=>user.UserFollowersId==UserFollowersId );
+        }
+
         public async Task<bool> SaveChangesAsync()
         {
             return (await conduitDbContext.SaveChangesAsync() >= 0);
+        }
+        public void ClearTracking()
+        {
+            conduitDbContext.ChangeTracker.Clear();
         }
     }
 }

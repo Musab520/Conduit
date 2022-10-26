@@ -18,6 +18,7 @@ namespace ConduitTests.ServiceTests
     public class UserServiceTest
     {
         private readonly IUserService userService;
+
         public UserServiceTest()
         {
             this.userService = new UserService(RepositoryMocks.GetUserRepository().Object,MapperMocks.GetMockMapper().Object);
@@ -26,30 +27,37 @@ namespace ConduitTests.ServiceTests
         [Fact]  
         public async Task CreateUserTest()
         {
-            UserForInsertDTO userForInsertDTO = new UserForInsertDTO { Username="Karma",Password="yoyoyo",FullName="Karma"};
+            UserForInsertDTO userForInsertDTO = new UserForInsertDTO { Username="Karma", Password="yoyoyo", FullName="Karma" };
+
             UserDTO? userDTO=await userService.AddUserAsync(userForInsertDTO);
+            
             Assert.NotNull(userDTO);
         }
+
         [Fact]
         public async Task GetUserTest()
         {
            UserDTO? userDTO = await userService.GetUserAsync(1);
+
            Assert.NotNull(userDTO);
         }
+
         [Fact]
         public async Task GetUserNotFoundTest()
         {
             UserDTO? userDTO = await userService.GetUserAsync(100);
+
             Assert.Null(userDTO);
         }
+
         [Fact]
         public async Task UpdateUserTest()
         {
             UserForUpdateDTO userForUpdateDTO = new UserForUpdateDTO { Username = "musab", Password = "yoyoyo", FullName = "Karma" };
+
             UserDTO? userDTO = await userService.UpdateUserAsync(userForUpdateDTO, 2);
+
             Assert.NotNull(userDTO);
         }
-
-
     }
 }

@@ -37,7 +37,7 @@ namespace Conduit.Presentation.Controllers
         [HttpPost]
         public async Task<ActionResult<UserForInsertDTO>> PostUser(UserForInsertDTO userForInsertDTO)
         {
-            if (userService.GetUserFromUserName(userForInsertDTO.Username) != null)
+            if (userService.GetUserFromUserName(userForInsertDTO.Username).Result != null)
             {
                 return BadRequest("400: Username is Taken");
             }
@@ -58,7 +58,7 @@ namespace Conduit.Presentation.Controllers
         [Route("{userId}")]
         public async Task<ActionResult> PutUser(UserForUpdateDTO userForUpdateDTO,int UserId)
         {
-            if(userService.GetUserFromUserName(userForUpdateDTO.Username) != null)
+            if(userService.GetUserFromUserName(userForUpdateDTO.Username).Result != null)
             {
                 return BadRequest("400: Username is Taken");
             }
